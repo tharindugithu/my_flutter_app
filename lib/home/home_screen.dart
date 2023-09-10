@@ -12,8 +12,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
   static final List<Widget> widgetOptions = <Widget>[
     HomeUi(),
-    const Text("Text 02"),
-    const Text("Text 03"),
+    const Text("Text 04"),
+    const Text("Text 06"),
     const Text("Text 04")
   ];
   void onItemTapped(int index) {
