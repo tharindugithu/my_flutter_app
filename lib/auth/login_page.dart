@@ -1,4 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/auth/ask_quiz.dart';
+import 'package:my_flutter_app/auth/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -67,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Container(
                   height: h * 0.09,
-                  width: w * 0.7,
+                  width: w * 0.8,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.horizontal(
@@ -105,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Container(
                   height: h * 0.09,
-                  width: w * 0.7,
+                  width: w * 0.8,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.horizontal(
@@ -144,22 +147,31 @@ class _LoginPageState extends State<LoginPage> {
           SizedBox(
             height: h * 0.02,
           ),
-          Container(
-            width: w * 0.5,
-            height: h * 0.08,
-            decoration: BoxDecoration(
-              color: Color(0xFF17B3A6),
-              borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(15), right: Radius.circular(15)),
-            ),
-            child: Center(
-              child: Text(
-                "Login",
-                style: TextStyle(
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => QuizPage()));
+            },
+            child: Container(
+              width: w * 0.5,
+              height: h * 0.08,
+              decoration: BoxDecoration(
+                color: Color(0xFF17B3A6),
+                borderRadius: BorderRadius.horizontal(
+                  left: Radius.circular(15),
+                  right: Radius.circular(15),
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  "Login",
+                  style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
-                    fontFamily: 'Arial'),
+                    fontFamily: 'Arial',
+                  ),
+                ),
               ),
             ),
           ),
@@ -307,6 +319,14 @@ class _LoginPageState extends State<LoginPage> {
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                           color: Colors.red),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          // Handle the navigation to the signup screen here
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Signup()));
+                        },
                     ),
                   ],
                 ),

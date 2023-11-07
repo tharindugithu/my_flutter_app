@@ -1,6 +1,7 @@
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/screens/categories.dart';
 
 class HomeUi extends StatelessWidget {
   @override
@@ -34,11 +35,22 @@ class HomeUi extends StatelessWidget {
       // Add more image paths as needed
     ];
     return Scaffold(
-      backgroundColor: Color(0xFFeeedf2),
       body: ListView(
         children: [
           Container(
-            margin: EdgeInsets.only(left: w * 0.025, right: w * 0.025),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 244, 245, 244), // Start color
+                  Color.fromARGB(255, 139, 199, 224), // End color
+                ],
+                begin:
+                    Alignment.topCenter, // Optional start point of the gradient
+                end: Alignment
+                    .bottomCenter, // Optional end point of the gradient
+              ),
+            ),
+            padding: EdgeInsets.only(left: w * 0.025, right: w * 0.025),
             //color: Colors.green,
             child: Column(
               children: [
@@ -159,20 +171,43 @@ class HomeUi extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    Container(
-                      child: Align(
-                        alignment: Alignment(-1.0, 0.0),
-                        child: Text(
-                          "Categories",
-                          style: TextStyle(
-                            fontSize: 20, // Increase text size
-                            color: Colors.black87, // Change text color
-                            fontWeight: FontWeight.bold, // Increase font weight
-                            fontFamily:
-                                'Sans-serif', // Change font family (replace 'YourFontFamily' with the desired font family)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          child: Align(
+                            // alignment: Alignment(-1.0, 0.0),
+                            child: Text(
+                              "Categories",
+                              style: TextStyle(
+                                fontSize: 17, // Increase text size
+                                color: Colors.black87, // Change text color
+                                fontWeight:
+                                    FontWeight.w500, // Increase font weight
+                                fontFamily:
+                                    'Sans-serif', // Change font family (replace 'YourFontFamily' with the desired font family)
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        Container(
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.more_horiz,
+                              size: 30,
+                              color: Colors.grey[500],
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CategoriesPage()));
+                            },
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                          ),
+                        ),
+                      ],
                     ),
                     Container(
                         height: 180,
@@ -294,26 +329,44 @@ class HomeUi extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    Container(
-                      child: Align(
-                        alignment: Alignment(-1.0, 0.0),
-                        child: Text(
-                          "On going courses",
-                          style: TextStyle(
-                            fontSize: 15, // Increase text size
-                            color: Colors.black45, // Change text color
-                            fontWeight: FontWeight.bold, // Increase font weight
-                            fontFamily:
-                                'Sans-serif', // Change font family (replace 'YourFontFamily' with the desired font family)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          child: Align(
+                            // alignment: Alignment(-1.0, 0.0),
+                            child: Text(
+                              "On going courses",
+                              style: TextStyle(
+                                fontSize: 15, // Increase text size
+                                color: Colors.black87, // Change text color
+                                fontWeight:
+                                    FontWeight.bold, // Increase font weight
+                                fontFamily:
+                                    'Sans-serif', // Change font family (replace 'YourFontFamily' with the desired font family)
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        Container(
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.more_horiz,
+                              color: Colors.grey[500],
+                              size: 30,
+                            ),
+                            onPressed: () {},
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                          ),
+                        ),
+                      ],
                     ),
                     Container(
                         height: 200,
                         padding: EdgeInsets.all(10),
                         width: w * 0.95,
-                        margin: EdgeInsets.only(top: 20),
+                        margin: EdgeInsets.only(top: 5),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
@@ -500,26 +553,44 @@ class HomeUi extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    Container(
-                      child: Align(
-                        alignment: Alignment(-1.0, 0.0),
-                        child: Text(
-                          "Recomandations",
-                          style: TextStyle(
-                            fontSize: 15, // Increase text size
-                            color: Colors.black45, // Change text color
-                            fontWeight: FontWeight.bold, // Increase font weight
-                            fontFamily:
-                                'Sans-serif', // Change font family (replace 'YourFontFamily' with the desired font family)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          child: Align(
+                            // alignment: Alignment(-1.0, 0.0),
+                            child: Text(
+                              "Recomandation",
+                              style: TextStyle(
+                                fontSize: 15, // Increase text size
+                                color: Colors.black87, // Change text color
+                                fontWeight:
+                                    FontWeight.bold, // Increase font weight
+                                fontFamily:
+                                    'Sans-serif', // Change font family (replace 'YourFontFamily' with the desired font family)
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        Container(
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.more_horiz,
+                              color: Colors.grey[500],
+                              size: 30,
+                            ),
+                            onPressed: () {},
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                          ),
+                        ),
+                      ],
                     ),
                     Container(
                         height: 140,
                         padding: EdgeInsets.all(10),
                         width: w * 0.95,
-                        margin: EdgeInsets.only(top: 20),
+                        margin: EdgeInsets.only(top: 5, bottom: 10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
@@ -605,8 +676,8 @@ class HomeUi extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      child: Text("dsd"),
-                    )
+                        // child: Text("dsd"),
+                        )
                   ],
                 )
               ],

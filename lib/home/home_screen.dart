@@ -29,18 +29,24 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: h * 0.14,
-        backgroundColor: Color(0xFFeeedf2),
+        backgroundColor: Color.fromARGB(255, 0, 0, 0),
         leading: Container(
           margin: EdgeInsets.only(bottom: h * 0.08, right: h * 0.03),
           width: 32.0,
           height: 32.0,
           child: IconButton(
-            icon: Image.asset(
-              "assets/img/larrow.png",
-              width: 18.0,
-              height: 18.0,
+            icon: Icon(
+              Icons.arrow_circle_left_outlined,
+              size: 30,
             ),
-            onPressed: () {},
+            // Image.asset(
+            //   "assets/img/larrow.png",
+            //   width: 18.0,
+            //   height: 18.0,
+            // ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
         ),
         title: Column(
