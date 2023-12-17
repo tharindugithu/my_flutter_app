@@ -2,6 +2,7 @@ import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/home/parts_of_home/home.dart';
+import 'package:my_flutter_app/home/parts_of_home/search_dart.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -10,9 +11,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
+
   static final List<Widget> widgetOptions = <Widget>[
     HomeUi(),
-    const Text("Text 02"),
+    SearchUi(),
     const Text("Text 03"),
     const Text("Text 04")
   ];

@@ -1,39 +1,61 @@
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:my_flutter_app/constants/const.dart';
+import 'package:my_flutter_app/screens/category.dart';
+import 'package:my_flutter_app/service/ApiService.dart';
+import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/screens/categories.dart';
+import 'package:my_flutter_app/model/CategoryModel.dart';
+import 'package:my_flutter_app/screens/courses.dart';
 
-class HomeUi extends StatelessWidget {
+class HomeUi extends StatefulWidget {
+  @override
+  _HomeUiState createState() => _HomeUiState();
+}
+
+class _HomeUiState extends State<HomeUi> {
+  String url = dotenv.get("BASE_URL");
+
+  List<CategoryModel> categories = [];
+  bool isLoading = true;
+  String errorMessage = "";
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  void fetchData() async {
+    try {
+      categories = await ApiService(url)
+          .fetchData("category", (e) => CategoryModel.fromJson(e));
+      print(categories[0].description);
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      print("Error: $e");
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+      errorMessage = "Failed to fetch data. Please try again later.";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
-    List<String> imagePaths = [
-      'assets/img/HEROKU.png',
-      'assets/img/html.png',
-      'assets/img/javascript.png',
-      'assets/img/mongo.png',
-      'assets/img/MYSQL.png',
-      'assets/img/nextjs.png',
-      'assets/img/node.png',
-      'assets/img/PHP.png',
-      'assets/img/react.png',
-      'assets/img/css.png',
-      // Add more image paths as needed
-    ];
-    List<String> catName = [
-      'Heroku',
-      'CSS',
-      'Java Script',
-      'MONGO',
-      'MYSQL',
-      'NEXTJS',
-      'NODE',
-      'PHP',
-      'REACT',
-      'CSS',
-      // Add more image paths as needed
-    ];
+    List<String> imagePaths = Consts().imagePaths;
+
     return Scaffold(
       body: ListView(
         children: [
@@ -179,13 +201,12 @@ class HomeUi extends StatelessWidget {
                             // alignment: Alignment(-1.0, 0.0),
                             child: Text(
                               "Categories",
-                              style: TextStyle(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 17, // Increase text size
                                 color: Colors.black87, // Change text color
                                 fontWeight:
                                     FontWeight.w500, // Increase font weight
-                                fontFamily:
-                                    'Sans-serif', // Change font family (replace 'YourFontFamily' with the desired font family)
+                                // You can add more font properties here
                               ),
                             ),
                           ),
@@ -236,92 +257,134 @@ class HomeUi extends StatelessWidget {
                         ),
                         //margin:
                         //EdgeInsets.only(left: w * 0.025, right: w * 0.025),
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 10, // Number of cards
-                          itemBuilder: (BuildContext context, int index) {
-                            // Replace 'assets/your_image.png' with the actual image asset path
-                            String imagePath =
-                                imagePaths[index % imagePaths.length];
-                            String catN = catName[index % catName.length];
-
-                            return Container(
-                              margin: EdgeInsets.only(
-                                  left: 5, top: 5, bottom: 5, right: 5),
-                              child: TextButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors
-                                            .blue.shade200), // Background color
-                                    foregroundColor: MaterialStateProperty.all(
-                                        Colors.white), // Text color
-                                    padding: MaterialStateProperty.all(
-                                        EdgeInsets.all(1.0)),
-                                    // Padding around text
-
-                                    elevation: MaterialStateProperty.all(
-                                        4.0), // Elevation (shadow)
-                                    shape: MaterialStateProperty.all(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            10.0), // Rounded corners
-                                      ),
+                        child: isLoading
+                            ? Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : errorMessage.isNotEmpty
+                                ? Center(
+                                    child: Text(
+                                      errorMessage,
+                                      style: TextStyle(color: Colors.red),
                                     ),
-                                  ),
-                                  onPressed: () {},
-                                  child: Container(
-                                    width: 150, // Adjust the width of the card
-                                    margin: EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black12,
-                                          offset: const Offset(5.0, 5.0),
-                                          blurRadius: 10.0,
-                                          spreadRadius: 2.0,
-                                        ),
-                                        BoxShadow(
-                                          color: Colors.white,
-                                          offset: const Offset(0.0, 0.0),
-                                          blurRadius: 0.0,
-                                          spreadRadius: 0.0,
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(top: 10),
-                                          width: 100, // Adjust the image width
-                                          height:
-                                              100, // Adjust the image height
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: AssetImage(
-                                                  imagePath), // Use the image path
+                                  )
+                                : ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount:
+                                        categories.length, // Number of cards
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      // Replace 'assets/your_image.png' with the actual image asset path
+                                      String imagePath = imagePaths[
+                                          int.parse(categories[index].img)];
+                                      String catN = categories[index].title;
+
+                                      return Container(
+                                        margin: EdgeInsets.only(
+                                            left: 5,
+                                            top: 5,
+                                            bottom: 5,
+                                            right: 5),
+                                        child: TextButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(Colors
+                                                      .blue
+                                                      .shade200), // Background color
+                                              foregroundColor:
+                                                  MaterialStateProperty.all(
+                                                      Colors
+                                                          .white), // Text color
+                                              padding:
+                                                  MaterialStateProperty.all(
+                                                      EdgeInsets.all(1.0)),
+                                              // Padding around text
+
+                                              elevation:
+                                                  MaterialStateProperty.all(
+                                                      4.0), // Elevation (shadow)
+                                              shape: MaterialStateProperty.all(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0), // Rounded corners
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                            height:
-                                                8), // Add spacing between image and text
-                                        Text(
-                                          catN,
-                                          style: TextStyle(
-                                              fontSize: 12.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.blue.shade400),
-                                        ),
-                                      ],
-                                    ),
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          SelectedCategory(
+                                                              selectedCategory:
+                                                                  categories[
+                                                                          index]
+                                                                      .id)));
+                                            },
+                                            child: Container(
+                                              width:
+                                                  150, // Adjust the width of the card
+                                              margin: EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.black12,
+                                                    offset:
+                                                        const Offset(5.0, 5.0),
+                                                    blurRadius: 10.0,
+                                                    spreadRadius: 2.0,
+                                                  ),
+                                                  BoxShadow(
+                                                    color: Colors.white,
+                                                    offset:
+                                                        const Offset(0.0, 0.0),
+                                                    blurRadius: 0.0,
+                                                    spreadRadius: 0.0,
+                                                  ),
+                                                ],
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        top: 10),
+                                                    width:
+                                                        100, // Adjust the image width
+                                                    height:
+                                                        100, // Adjust the image height
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      image: DecorationImage(
+                                                        fit: BoxFit.cover,
+                                                        image: AssetImage(
+                                                            imagePath), // Use the image path
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                      height:
+                                                          8), // Add spacing between image and text
+                                                  Text(
+                                                    catN,
+                                                    style:
+                                                        GoogleFonts.montserrat(
+                                                            fontSize: 12.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors
+                                                                .blue.shade400),
+                                                  ),
+                                                ],
+                                              ),
+                                            )),
+                                      );
+                                    },
                                   )),
-                            );
-                          },
-                        )),
                   ],
                 ),
                 SizedBox(
@@ -337,13 +400,11 @@ class HomeUi extends StatelessWidget {
                             // alignment: Alignment(-1.0, 0.0),
                             child: Text(
                               "On going courses",
-                              style: TextStyle(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 15, // Increase text size
                                 color: Colors.black87, // Change text color
-                                fontWeight:
-                                    FontWeight.bold, // Increase font weight
-                                fontFamily:
-                                    'Sans-serif', // Change font family (replace 'YourFontFamily' with the desired font family)
+                                // Increase font weight
+                                // Change font family (replace 'YourFontFamily' with the desired font family)
                               ),
                             ),
                           ),
@@ -355,7 +416,12 @@ class HomeUi extends StatelessWidget {
                               color: Colors.grey[500],
                               size: 30,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CoursesPage()));
+                            },
                             splashColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                           ),
@@ -561,13 +627,9 @@ class HomeUi extends StatelessWidget {
                             // alignment: Alignment(-1.0, 0.0),
                             child: Text(
                               "Recomandation",
-                              style: TextStyle(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 15, // Increase text size
                                 color: Colors.black87, // Change text color
-                                fontWeight:
-                                    FontWeight.bold, // Increase font weight
-                                fontFamily:
-                                    'Sans-serif', // Change font family (replace 'YourFontFamily' with the desired font family)
                               ),
                             ),
                           ),
