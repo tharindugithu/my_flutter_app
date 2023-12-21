@@ -67,33 +67,38 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0.0,
       ),
       body: Center(child: widgetOptions[selectedIndex]),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: selectedIndex,
-        onTap: onItemTapped,
-        elevation: 30,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.blueGrey,
-        unselectedItemColor: Color(0xFF526480),
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(FluentSystemIcons.ic_fluent_home_regular),
-              activeIcon: Icon(FluentSystemIcons.ic_fluent_home_filled),
-              label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(FluentSystemIcons.ic_fluent_search_regular),
-              activeIcon: Icon(FluentSystemIcons.ic_fluent_search_filled),
-              label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(FluentSystemIcons.ic_fluent_ticket_regular),
-              activeIcon: Icon(FluentSystemIcons.ic_fluent_ticket_filled),
-              label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(FluentSystemIcons.ic_fluent_person_regular),
-              activeIcon: Icon(FluentSystemIcons.ic_fluent_person_filled),
-              label: "Home")
-        ],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(color: const Color.fromARGB(255, 44, 44, 44)),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.transparent,
+          currentIndex: selectedIndex,
+          onTap: onItemTapped,
+          elevation: 30,
+          showSelectedLabels: true, // Set to true to show selected item label
+          showUnselectedLabels:
+              true, // Set to true to show unselected item labels
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Colors.blueGrey,
+          unselectedItemColor: Color(0xFF526480),
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(FluentSystemIcons.ic_fluent_home_regular),
+                activeIcon: Icon(FluentSystemIcons.ic_fluent_home_filled),
+                label: "Home"),
+            BottomNavigationBarItem(
+                icon: Icon(FluentSystemIcons.ic_fluent_search_regular),
+                activeIcon: Icon(FluentSystemIcons.ic_fluent_search_filled),
+                label: "Search"), // Update label here
+            BottomNavigationBarItem(
+                icon: Icon(FluentSystemIcons.ic_fluent_ticket_regular),
+                activeIcon: Icon(FluentSystemIcons.ic_fluent_ticket_filled),
+                label: "Tickets"), // Update label here
+            BottomNavigationBarItem(
+                icon: Icon(FluentSystemIcons.ic_fluent_person_regular),
+                activeIcon: Icon(FluentSystemIcons.ic_fluent_person_filled),
+                label: "Profile"), // Update label here
+          ],
+        ),
       ),
     );
   }

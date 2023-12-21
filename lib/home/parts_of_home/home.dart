@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:my_flutter_app/screens/categories.dart';
 import 'package:my_flutter_app/model/CategoryModel.dart';
 import 'package:my_flutter_app/screens/courses.dart';
+import 'package:my_flutter_app/utils/Blurbox.dart';
 
 class HomeUi extends StatefulWidget {
   @override
@@ -61,17 +62,10 @@ class _HomeUiState extends State<HomeUi> {
         children: [
           Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 244, 245, 244), // Start color
-                  Color.fromARGB(255, 139, 199, 224), // End color
-                ],
-                begin:
-                    Alignment.topCenter, // Optional start point of the gradient
-                end: Alignment
-                    .bottomCenter, // Optional end point of the gradient
-              ),
-            ),
+                image: DecorationImage(
+                    image: AssetImage("assets/img/home_back2.jpg"),
+                    fit: BoxFit.cover)),
+
             padding: EdgeInsets.only(left: w * 0.025, right: w * 0.025),
             //color: Colors.green,
             child: Column(
@@ -202,8 +196,9 @@ class _HomeUiState extends State<HomeUi> {
                             child: Text(
                               "Categories",
                               style: GoogleFonts.montserrat(
-                                fontSize: 17, // Increase text size
-                                color: Colors.black87, // Change text color
+                                fontSize: 20, // Increase text size
+                                color: const Color.fromARGB(
+                                    221, 255, 255, 255), // Change text color
                                 fontWeight:
                                     FontWeight.w500, // Increase font weight
                                 // You can add more font properties here
@@ -231,160 +226,143 @@ class _HomeUiState extends State<HomeUi> {
                       ],
                     ),
                     Container(
-                        height: 180,
-                        padding: EdgeInsets.all(10),
-                        width: w * 0.95,
-                        margin: EdgeInsets.only(top: 20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black26,
-                              offset: const Offset(
-                                5.0,
-                                5.0,
-                              ),
-                              blurRadius: 10.0,
-                              spreadRadius: 2.0,
-                            ), //BoxShadow
-                            BoxShadow(
-                              color: Color(0xFFD9D9D9),
-                              offset: const Offset(0.0, 0.0),
-                              blurRadius: 0.0,
-                              spreadRadius: 0.0,
-                            ), //BoxShadow
-                          ],
-                        ),
-                        //margin:
-                        //EdgeInsets.only(left: w * 0.025, right: w * 0.025),
-                        child: isLoading
-                            ? Center(
-                                child: CircularProgressIndicator(),
-                              )
-                            : errorMessage.isNotEmpty
-                                ? Center(
-                                    child: Text(
-                                      errorMessage,
-                                      style: TextStyle(color: Colors.red),
-                                    ),
-                                  )
-                                : ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount:
-                                        categories.length, // Number of cards
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      // Replace 'assets/your_image.png' with the actual image asset path
-                                      String imagePath = imagePaths[
-                                          int.parse(categories[index].img)];
-                                      String catN = categories[index].title;
+                      height: 210,
+                      padding: EdgeInsets.all(10),
+                      width: w * 0.95,
+                      margin: EdgeInsets.only(top: 0),
+                      child: isLoading
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : errorMessage.isNotEmpty
+                              ? Center(
+                                  child: Text(
+                                    errorMessage,
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                )
+                              : ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: categories.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    String imagePath = imagePaths[
+                                        int.parse(categories[index].img)];
+                                    String catN = categories[index].title;
 
-                                      return Container(
-                                        margin: EdgeInsets.only(
-                                            left: 5,
-                                            top: 5,
-                                            bottom: 5,
-                                            right: 5),
-                                        child: TextButton(
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(Colors
-                                                      .blue
-                                                      .shade200), // Background color
-                                              foregroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors
-                                                          .white), // Text color
-                                              padding:
-                                                  MaterialStateProperty.all(
-                                                      EdgeInsets.all(1.0)),
-                                              // Padding around text
-
-                                              elevation:
-                                                  MaterialStateProperty.all(
-                                                      4.0), // Elevation (shadow)
-                                              shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0), // Rounded corners
-                                                ),
+                                    return Container(
+                                      margin: EdgeInsets.only(
+                                          left: 5, top: 5, bottom: 5, right: 5),
+                                      child: TextButton(
+                                        style: ButtonStyle(
+                                          foregroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.white),
+                                          padding: MaterialStateProperty.all(
+                                              EdgeInsets.all(1.0)),
+                                          elevation:
+                                              MaterialStateProperty.all(4.0),
+                                          shape: MaterialStateProperty.all(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30.0),
+                                            ),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SelectedCategory(
+                                                selectedCategory:
+                                                    categories[index].id,
                                               ),
                                             ),
-                                            onPressed: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          SelectedCategory(
-                                                              selectedCategory:
-                                                                  categories[
-                                                                          index]
-                                                                      .id)));
-                                            },
-                                            child: Container(
-                                              width:
-                                                  150, // Adjust the width of the card
-                                              margin: EdgeInsets.all(5),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.black12,
-                                                    offset:
-                                                        const Offset(5.0, 5.0),
-                                                    blurRadius: 10.0,
-                                                    spreadRadius: 2.0,
-                                                  ),
-                                                  BoxShadow(
-                                                    color: Colors.white,
-                                                    offset:
-                                                        const Offset(0.0, 0.0),
-                                                    blurRadius: 0.0,
-                                                    spreadRadius: 0.0,
-                                                  ),
-                                                ],
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        top: 10),
-                                                    width:
-                                                        100, // Adjust the image width
-                                                    height:
-                                                        100, // Adjust the image height
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      image: DecorationImage(
-                                                        fit: BoxFit.cover,
-                                                        image: AssetImage(
-                                                            imagePath), // Use the image path
-                                                      ),
+                                          );
+                                        },
+                                        child: FrostedGlassBox(
+                                          radius: 30.0,
+                                          theHeight: 200.0,
+                                          theWidth: 200.0,
+                                          padding: 1.0,
+                                          theChild: Container(
+                                            width: 200,
+                                            margin: EdgeInsets.all(5),
+                                            // decoration: BoxDecoration(
+                                            //   color: Colors.transparent,
+                                            //   borderRadius:
+                                            //       BorderRadius.circular(30),
+                                            //   boxShadow: [
+                                            //     BoxShadow(
+                                            //       color: Colors.black12,
+                                            //       offset:
+                                            //           const Offset(5.0, 5.0),
+                                            //       blurRadius: 10.0,
+                                            //       spreadRadius: 2.0,
+                                            //     ),
+                                            //     BoxShadow(
+                                            //       color: Colors.white,
+                                            //       offset:
+                                            //           const Offset(0.0, 0.0),
+                                            //       blurRadius: 0.0,
+                                            //       spreadRadius: 0.0,
+                                            //     ),
+                                            //   ],
+                                            // ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  margin:
+                                                      EdgeInsets.only(top: 10),
+                                                  width: 100,
+                                                  height: 100,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image:
+                                                          AssetImage(imagePath),
                                                     ),
                                                   ),
-                                                  SizedBox(
-                                                      height:
-                                                          8), // Add spacing between image and text
-                                                  Text(
-                                                    catN,
-                                                    style:
-                                                        GoogleFonts.montserrat(
-                                                            fontSize: 12.0,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Colors
-                                                                .blue.shade400),
-                                                  ),
-                                                ],
-                                              ),
-                                            )),
-                                      );
-                                    },
-                                  )),
+                                                ),
+                                                SizedBox(height: 8),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      catN,
+                                                      style: GoogleFonts
+                                                          .montserrat(
+                                                        fontSize: 12.0,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: const Color
+                                                            .fromARGB(
+                                                            255, 25, 25, 25),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                      // ),
+                    ),
                   ],
                 ),
                 SizedBox(
@@ -402,7 +380,8 @@ class _HomeUiState extends State<HomeUi> {
                               "On going courses",
                               style: GoogleFonts.montserrat(
                                 fontSize: 15, // Increase text size
-                                color: Colors.black87, // Change text color
+                                color: const Color.fromARGB(
+                                    221, 255, 255, 255), // Change text color
                                 // Increase font weight
                                 // Change font family (replace 'YourFontFamily' with the desired font family)
                               ),
@@ -430,29 +409,29 @@ class _HomeUiState extends State<HomeUi> {
                     ),
                     Container(
                         height: 200,
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(0),
                         width: w * 0.95,
                         margin: EdgeInsets.only(top: 5),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black26,
-                              offset: const Offset(
-                                5.0,
-                                5.0,
-                              ),
-                              blurRadius: 10.0,
-                              spreadRadius: 2.0,
-                            ), //BoxShadow
-                            BoxShadow(
-                              color: Colors.white,
-                              offset: const Offset(0.0, 0.0),
-                              blurRadius: 0.0,
-                              spreadRadius: 0.0,
-                            ), //BoxShadow
-                          ],
-                        ),
+
+                            // boxShadow: [
+                            //   BoxShadow(
+                            //     color: Colors.black26,
+                            //     offset: const Offset(
+                            //       5.0,
+                            //       5.0,
+                            //     ),
+                            //     blurRadius: 10.0,
+                            //     spreadRadius: 2.0,
+                            //   ), //BoxShadow
+                            //   BoxShadow(
+                            //     color: Colors.white,
+                            //     offset: const Offset(0.0, 0.0),
+                            //     blurRadius: 0.0,
+                            //     spreadRadius: 0.0,
+                            //   ), //BoxShadow
+                            // ],
+                            ),
                         //margin:
                         //EdgeInsets.only(left: w * 0.025, right: w * 0.025),
                         child: ListView.builder(
@@ -471,142 +450,135 @@ class _HomeUiState extends State<HomeUi> {
                             return TextButton(
                                 onPressed: () {},
                                 child: Container(
-                                  width: 230, // Adjust the width of the card
+                                  // width: 230, // Adjust the width of the card
                                   margin: EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black12,
-                                        offset: const Offset(5.0, 5.0),
-                                        blurRadius: 10.0,
-                                        spreadRadius: 2.0,
-                                      ),
-                                      BoxShadow(
-                                        color: Color(colorCode),
-                                        offset: const Offset(0.0, 0.0),
-                                        blurRadius: 0.0,
-                                        spreadRadius: 0.0,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Container(
-                                    padding: EdgeInsets.all(10),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              width:
-                                                  35, // Adjust the image width
-                                              height:
-                                                  35, // Adjust the image height
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: AssetImage(
-                                                      imagePath), // Use the image path
+                                  decoration:
+                                      BoxDecoration(color: Colors.transparent),
+                                  child: FrostedGlassBox(
+                                    radius: 10.0,
+                                    theHeight: 160.0,
+                                    theWidth: 270.0,
+                                    padding: 1.0,
+                                    theChild: Container(
+                                      padding: EdgeInsets.all(10),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                width:
+                                                    35, // Adjust the image width
+                                                height:
+                                                    35, // Adjust the image height
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  image: DecorationImage(
+                                                    fit: BoxFit.cover,
+                                                    image: AssetImage(
+                                                        imagePath), // Use the image path
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            Text(
-                                              "Name of Course",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 15),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Container(
-                                              width: 210,
-                                              height: 10,
-                                              margin: EdgeInsets.only(
-                                                  top: 15, bottom: 10),
-                                              child: Slider(
-                                                activeColor: Colors.green
-                                                    .shade400, // Set the color of the active track
-                                                inactiveColor: Colors
-                                                    .grey, // Set the color of the inactive track
-                                                label: "Select Age",
-                                                onChanged: (double newValue) {
-                                                  // Handle the new value here
-                                                  // You can update a variable or perform any action you need
-                                                },
-                                                min: 5,
-                                                max: 10,
-                                                value: 9,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(top: 10),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
                                               Text(
-                                                "43 videos",
+                                                "Name of Course",
                                                 style: TextStyle(
                                                     color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                              ),
-                                              Text(
-                                                "10 Exersices",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.w400),
+                                                    fontSize: 15),
                                               ),
                                             ],
                                           ),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(top: 10),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                          Row(
                                             children: [
-                                              Text(
-                                                "4.5 Reviews",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.w400),
+                                              Container(
+                                                width: 210,
+                                                height: 10,
+                                                margin: EdgeInsets.only(
+                                                    top: 15, bottom: 10),
+                                                child: Slider(
+                                                  activeColor: Colors.green
+                                                      .shade400, // Set the color of the active track
+                                                  inactiveColor: Colors
+                                                      .grey, // Set the color of the inactive track
+                                                  label: "Select Age",
+                                                  onChanged: (double newValue) {
+                                                    // Handle the new value here
+                                                    // You can update a variable or perform any action you need
+                                                  },
+                                                  min: 5,
+                                                  max: 10,
+                                                  value: 9,
+                                                ),
                                               ),
-                                              Row(
-                                                children: [
-                                                  Icon(
-                                                    FluentSystemIcons
-                                                        .ic_fluent_star_filled,
-                                                    color: Colors.yellow,
-                                                  ),
-                                                  Text(
-                                                    "4.5",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                  ),
-                                                ],
-                                              )
                                             ],
                                           ),
-                                        ),
-                                      ],
+                                          Container(
+                                            margin: EdgeInsets.only(top: 10),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  "43 videos",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ),
+                                                Text(
+                                                  "10 Exersices",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(top: 10),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  "4.5 Reviews",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Icon(
+                                                      FluentSystemIcons
+                                                          .ic_fluent_star_filled,
+                                                      color: Colors.yellow,
+                                                    ),
+                                                    Text(
+                                                      "4.5",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ));
@@ -629,7 +601,8 @@ class _HomeUiState extends State<HomeUi> {
                               "Recomandation",
                               style: GoogleFonts.montserrat(
                                 fontSize: 15, // Increase text size
-                                color: Colors.black87, // Change text color
+                                color: const Color.fromARGB(
+                                    221, 255, 255, 255), // Change text color
                               ),
                             ),
                           ),
@@ -656,21 +629,21 @@ class _HomeUiState extends State<HomeUi> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
-                            BoxShadow(
-                              color: Colors.black26,
-                              offset: const Offset(
-                                5.0,
-                                5.0,
-                              ),
-                              blurRadius: 10.0,
-                              spreadRadius: 2.0,
-                            ), //BoxShadow
-                            BoxShadow(
-                              color: Colors.white,
-                              offset: const Offset(0.0, 0.0),
-                              blurRadius: 0.0,
-                              spreadRadius: 0.0,
-                            ), //BoxShadow
+                            // BoxShadow(
+                            //   color: Colors.black26,
+                            //   offset: const Offset(
+                            //     5.0,
+                            //     5.0,
+                            //   ),
+                            //   blurRadius: 10.0,
+                            //   spreadRadius: 2.0,
+                            // ), //BoxShadow
+                            // BoxShadow(
+                            //   color: Colors.white,
+                            //   offset: const Offset(0.0, 0.0),
+                            //   blurRadius: 0.0,
+                            //   spreadRadius: 0.0,
+                            // ), //BoxShadow
                           ],
                         ),
                         //margin:
@@ -685,50 +658,46 @@ class _HomeUiState extends State<HomeUi> {
                             ;
 
                             return Container(
-                              width: 80, // Adjust the width of the card
-                              margin: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    offset: const Offset(5.0, 5.0),
-                                    blurRadius: 10.0,
-                                    spreadRadius: 2.0,
+                              margin: EdgeInsets.only(left: 10),
+                              child: FrostedGlassBox(
+                                theWidth: 100.0,
+                                theHeight: 100.0,
+                                padding: 2.0,
+                                radius: 10.0,
+                                theChild: Container(
+                                  width: 80, // Adjust the width of the card
+                                  margin: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(3),
                                   ),
-                                  BoxShadow(
-                                    color: Colors.yellow.shade50,
-                                    offset: const Offset(0.0, 0.0),
-                                    blurRadius: 0.0,
-                                    spreadRadius: 0.0,
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    width: 75, // Adjust the image width
-                                    height: 75, // Adjust the image height
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: AssetImage(
-                                            imagePath), // Use the image path
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: 75, // Adjust the image width
+                                        height: 75, // Adjust the image height
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: AssetImage(
+                                                imagePath), // Use the image path
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      SizedBox(
+                                          height:
+                                              8), // Add spacing between image and text
+                                      Text(
+                                        "Name",
+                                        style: TextStyle(
+                                          fontSize: 10.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(
-                                      height:
-                                          8), // Add spacing between image and text
-                                  Text(
-                                    "Name",
-                                    style: TextStyle(
-                                      fontSize: 10.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                             );
                           },

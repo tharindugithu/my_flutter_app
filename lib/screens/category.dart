@@ -1,10 +1,15 @@
+import 'dart:ui';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/constants/const.dart';
 import 'package:my_flutter_app/model/CategoryModel.dart';
 import 'package:my_flutter_app/service/ApiService.dart';
+import 'package:blur/blur.dart';
+import 'package:my_flutter_app/utils/Blurbox.dart';
 
 class SelectedCategory extends StatefulWidget {
   final String selectedCategory;
@@ -114,6 +119,86 @@ class _SelectedCategoryState extends State<SelectedCategory> {
                       style: TextStyle(color: Colors.red),
                     ),
                   )
-                : Text(imgPaths[int.parse(categoryModel.img)]));
+                : ListView(
+                    children: [
+                      Container(
+                        width: w,
+                        height: h * 0.9,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            // Import image in pubspec.yaml first
+                            image: AssetImage('assets/img/cat4.jpg'),
+                            // BoxFit.cover scales up the image until it completely covers the screen
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        padding:
+                            EdgeInsets.only(left: w * 0.025, right: w * 0.025),
+                        child: Column(children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                categoryModel.title,
+                                style: GoogleFonts.robotoSlab(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w500,
+                                  color:
+                                      const Color.fromARGB(221, 255, 253, 253),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                  width: 200,
+                                  margin: EdgeInsets.only(top: 10),
+                                  height: h * 0.2,
+                                  color: Colors.transparent,
+                                  child: FrostedGlassBox(
+                                    radius: 30.0,
+                                    theWidth: 100.0,
+                                    theHeight: 200.0,
+                                    padding: 10.0,
+                                    theChild: Image(
+                                      image: AssetImage(imgPaths[
+                                          int.parse(categoryModel.img)]),
+                                    ),
+                                  )),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Container(
+                                  margin: EdgeInsets.only(top: 20),
+                                  child: FrostedGlassBox(
+                                    padding: 5.0,
+                                    radius: 10.0,
+                                    theHeight: 200.0,
+                                    theWidth: w,
+                                    theChild: Text(
+                                      "Text(String data, {Key? key, TextStyle? style, StrutStyle? strutStyle, TextAlign? textAlign, TextDirection? textDirection, Locale? locale, bool? softWrap, TextOverflow? overflow, double? textScaleFactor, int? maxLines, String? semanticsLabel, TextWidthBasis? textWidthBasis, TextHeightBehavior? textHeightBehavior, Color? selectionColor})",
+                                      textAlign: TextAlign.justify,
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                        color:
+                                            Color.fromARGB(221, 255, 255, 255),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          )
+                        ]),
+                      )
+                    ],
+                  ));
   }
 }
