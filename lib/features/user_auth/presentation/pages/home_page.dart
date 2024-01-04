@@ -1,15 +1,26 @@
+import 'package:flutter/material.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:my_flutter_app/global/common/toast.dart';
 import 'package:my_flutter_app/screens/categories.dart';
 
-class HomeUi extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
+
     List<String> imagePaths = [
-      'assets/img/HEROKU.png',
+     'assets/img/HEROKU.png',
       'assets/img/html.png',
       'assets/img/javascript.png',
       'assets/img/mongo.png',
@@ -21,8 +32,9 @@ class HomeUi extends StatelessWidget {
       'assets/img/css.png',
       // Add more image paths as needed
     ];
+
     List<String> catName = [
-      'Heroku',
+     'Heroku',
       'CSS',
       'Java Script',
       'MONGO',
@@ -32,8 +44,9 @@ class HomeUi extends StatelessWidget {
       'PHP',
       'REACT',
       'CSS',
-      // Add more image paths as needed
+
     ];
+
     return Scaffold(
       body: ListView(
         children: [

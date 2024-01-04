@@ -1,7 +1,8 @@
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/home/parts_of_home/home.dart';
+import 'package:my_flutter_app/features/user_auth/presentation/pages/home_page.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
   static final List<Widget> widgetOptions = <Widget>[
-    HomeUi(),
+    HomePage(),
     const Text("Text 02"),
     const Text("Text 03"),
     const Text("Text 04")

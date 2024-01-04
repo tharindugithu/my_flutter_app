@@ -1,17 +1,43 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
-class LoadingPage extends StatefulWidget {
-  const LoadingPage({Key? key}) : super(key: key);
+class SplashScreen extends StatefulWidget {
+  final Widget? child;
+
+  const SplashScreen({Key? key, this.child}) : super(key: key);
 
   @override
-  State<LoadingPage> createState() => _LoadingPageState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _LoadingPageState extends State<LoadingPage> {
+class _SplashScreenState extends State<SplashScreen> {
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer(Duration(seconds: 3), () {
+      if (mounted) {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => widget.child!),
+          (route) => false,
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFFF8F8FF),
@@ -29,7 +55,7 @@ class _LoadingPageState extends State<LoadingPage> {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.all(40.0), // Adjust the padding value as needed
+          padding: EdgeInsets.all(40.0),
           child: DecoratedBox(
             decoration: BoxDecoration(
               image: DecorationImage(

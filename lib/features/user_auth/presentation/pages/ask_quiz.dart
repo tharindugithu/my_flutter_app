@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/home/home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:my_flutter_app/features/user_auth/presentation/pages/home_screen.dart';
+import 'package:my_flutter_app/features/app/splash_screen/splash_screen.dart';
+import 'package:my_flutter_app/features/user_auth/presentation/pages/home_page.dart';
+import 'package:my_flutter_app/features/user_auth/presentation/pages/login_page.dart';
+import 'package:my_flutter_app/features/user_auth/presentation/pages/sign_up_page.dart';
+
+
 
 class QuizPage extends StatefulWidget {
   const QuizPage({Key? key}) : super(key: key);
