@@ -366,7 +366,7 @@ class _HomeUiState extends State<HomeUi> {
                   ],
                 ),
                 SizedBox(
-                  height: h * 0.04,
+                  height: h * 0.05,
                 ),
                 Column(
                   children: [
@@ -450,7 +450,7 @@ class _HomeUiState extends State<HomeUi> {
                             return TextButton(
                                 onPressed: () {},
                                 child: Container(
-                                  // width: 230, // Adjust the width of the card
+                                  //width: 270, // Adjust the width of the card
                                   margin: EdgeInsets.all(5),
                                   decoration:
                                       BoxDecoration(color: Colors.transparent),
@@ -687,7 +687,7 @@ class _HomeUiState extends State<HomeUi> {
                                       ),
                                       SizedBox(
                                           height:
-                                              8), // Add spacing between image and text
+                                              7), // Add spacing between image and text
                                       Text(
                                         "Name",
                                         style: TextStyle(

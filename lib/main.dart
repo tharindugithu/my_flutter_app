@@ -6,6 +6,7 @@ import 'package:my_flutter_app/auth/login_page.dart';
 void main() async {
   await dotenv.load(fileName: ".env");
   runApp(MyApp());
+  
 }
 
 class MyApp extends StatelessWidget {
