@@ -1,7 +1,10 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/auth/ask_quiz.dart';
-import 'package:my_flutter_app/auth/signup_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import './signup_page.dart';
+import './form_container_widget.dart';
+import './toast.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -11,330 +14,198 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _isSigning = false;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn(clientId: '//google sign id');
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    double w = MediaQuery.of(context).size.width;
-    double h = MediaQuery.of(context).size.height;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Color(0xFFF8F8FF),
-      body: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 15.0, left: 40.0, right: 40.0),
-            width: w,
-            height: h * 0.1,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/img/logo.png"),
-                    fit: BoxFit.contain)),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 20.0, right: 20.0),
-            width: w,
-            height: h * 0.45,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 0.0, right: 0.0, bottom: 10.0),
-                  width: w,
-                  height: h * 0.1,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                    image: AssetImage("assets/img/education.png"),
-                    fit: BoxFit.contain,
-                  )),
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 15.0),
-                  child: Text(
-                    "Welcome to IT Pathfinders!",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF3A3A3A),
-                        fontFamily: 'Arial'),
-                  ),
-                ),
-                Text(
-                  "Login to your account",
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey[500],
-                      fontFamily: 'Arial'),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  height: h * 0.09,
-                  width: w * 0.8,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.horizontal(
-                          left: Radius.circular(15),
-                          right: Radius.circular(15)),
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 10,
-                            spreadRadius: 7,
-                            offset: Offset(1, 1),
-                            color: Colors.grey.withOpacity(0.2))
-                      ]),
-                  child: TextField(
-                    decoration: InputDecoration(
-                        labelText: 'Enter Username',
-                        labelStyle: TextStyle(color: Colors.black),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.horizontal(
-                                left: Radius.circular(15),
-                                right: Radius.circular(15)),
-                            borderSide: BorderSide(color: Colors.white)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.horizontal(
-                                left: Radius.circular(15),
-                                right: Radius.circular(15)),
-                            borderSide: BorderSide(color: Colors.white)),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.horizontal(
-                                left: Radius.circular(15),
-                                right: Radius.circular(15)))),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  height: h * 0.09,
-                  width: w * 0.8,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.horizontal(
-                          left: Radius.circular(15),
-                          right: Radius.circular(15)),
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 10,
-                            spreadRadius: 7,
-                            offset: Offset(1, 1),
-                            color: Colors.grey.withOpacity(0.2))
-                      ]),
-                  child: TextField(
-                    decoration: InputDecoration(
-                        labelText: 'Enter Password',
-                        labelStyle: TextStyle(color: Colors.black),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.horizontal(
-                                left: Radius.circular(15),
-                                right: Radius.circular(15)),
-                            borderSide: BorderSide(color: Colors.white)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.horizontal(
-                                left: Radius.circular(15),
-                                right: Radius.circular(15)),
-                            borderSide: BorderSide(color: Colors.white)),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.horizontal(
-                                left: Radius.circular(15),
-                                right: Radius.circular(15)))),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: h * 0.02,
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => QuizPage()));
-            },
-            child: Container(
-              width: w * 0.5,
-              height: h * 0.08,
-              decoration: BoxDecoration(
-                color: Color(0xFF17B3A6),
-                borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(15),
-                  right: Radius.circular(15),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+  
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Hero(
+                tag: 'logo',
+                child: Image.asset(
+                  'assets/logo.png', 
+                  width: 150,
+                  height: 150,
                 ),
               ),
-              child: Center(
-                child: Text(
-                  "Login",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
-                    fontFamily: 'Arial',
-                  ),
-                ),
+              SizedBox(height: 20),
+              Text(
+                "Login",
+                style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
               ),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            width: w * 0.5,
-            height: h * 0.04,
-            child: Center(
-              child: Text(
-                "Connect with",
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF7C7C8A),
-                    fontFamily: 'Arial'),
+              SizedBox(height: 30),
+              FormContainerWidget(
+                controller: _emailController,
+                hintText: "Email",
+                isPasswordField: false,
               ),
-            ),
-          ),
-          Container(
-            width: w * 0.9,
-            height: h * 0.15,
-            decoration: BoxDecoration(
-              color: Color(0xFFF8F8FF),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: w * 0.22,
-                  height: h * 0.12,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFFFFFFF),
+              SizedBox(height: 10),
+              FormContainerWidget(
+                controller: _passwordController,
+                hintText: "Password",
+                isPasswordField: true,
+              ),
+              SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+                  _signIn();
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue,
+                  shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromRGBO(0, 0, 0, 0.25),
-                        offset: Offset(0, 0),
-                        blurRadius: 4,
-                        spreadRadius: 0,
-                      ),
-                    ],
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.all(
-                        14.0), // Adjust the padding value as needed
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/img/g.png"),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                  ),
+                  padding: EdgeInsets.symmetric(vertical: 15),
                 ),
-                SizedBox(
-                  width: 30,
-                ),
-                Container(
-                  width: w * 0.22,
-                  height: h * 0.12,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFFFFFFF),
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromRGBO(0, 0, 0, 0.25),
-                        offset: Offset(0, 0),
-                        blurRadius: 4,
-                        spreadRadius: 0,
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(
-                        14.0), // Adjust the padding value as needed
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/img/f2.png"),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 30,
-                ),
-                Container(
-                  width: w * 0.22,
-                  height: h * 0.12,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFFFFFFF),
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromRGBO(0, 0, 0, 0.25),
-                        offset: Offset(0, 0),
-                        blurRadius: 4,
-                        spreadRadius: 0,
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(
-                        14.0), // Adjust the padding value as needed
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/img/t.png"),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Container(
-            width: w,
-            height: 0.04 * h,
-            child: Center(
-              child: RichText(
-                text: TextSpan(
-                  style: DefaultTextStyle.of(context).style,
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: "Don't have an account? ",
-                      style: TextStyle(
-                          fontFamily: 'Arial',
-                          decoration: TextDecoration.none,
+                child: _isSigning
+                    ? CircularProgressIndicator(color: Colors.white)
+                    : Text(
+                        "Login",
+                        style: TextStyle(
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                          color: Colors.grey),
-                    ),
-                    TextSpan(
-                      text: ' Sign up.',
-                      style: TextStyle(
-                          fontFamily: 'Arial',
-                          decoration: TextDecoration.none,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                          color: Colors.red),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          // Handle the navigation to the signup screen here
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Signup()));
-                        },
-                    ),
-                  ],
-                ),
+                        ),
+                      ),
               ),
-            ),
-          )
-        ],
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      _signInWithGoogle();
+                    },
+                    child: Container(
+                      width: 45,
+                      height: 45,
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: Icon(FontAwesomeIcons.google, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                
+
+                  GestureDetector(
+                    onTap: () {
+                      
+                    },
+                    child: Container(
+                      width: 45,
+                      height: 45,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: Icon(FontAwesomeIcons.facebook, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Don't have an account?"),
+                  SizedBox(width: 5),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignUpPage()),
+                      );
+                    },
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
+  }
+
+  void _signIn() async {
+    setState(() {
+      _isSigning = true;
+    });
+
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+
+      User? user = userCredential.user;
+
+      setState(() {
+        _isSigning = false;
+      });
+
+      if (user != null) {
+        showToast(message: "User is successfully signed in");
+        Navigator.pushReplacementNamed(context, "/home");
+      } else {
+        showToast(message: "Some error occurred");
+      }
+    } catch (e) {
+      setState(() {
+        _isSigning = false;
+      });
+      showToast(message: "Error: $e");
+    }
+  }
+
+  _signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken,
+        );
+
+        await FirebaseAuth.instance.signInWithCredential(credential);
+        Navigator.pushReplacementNamed(context, "/home");
+      }
+    } catch (e) {
+      showToast(message: "Some error occurred: $e");
+    }
   }
 }
