@@ -16,7 +16,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _isSigning = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn(clientId: '1091266292001-r76rbncgnn1ek77rr4lqosovb621kvq6.apps.googleusercontent.com');
+  final GoogleSignIn _googleSignIn = GoogleSignIn(clientId: 'id');
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 

@@ -13,10 +13,7 @@ void main() async {
 
   await Firebase.initializeApp(
     options: FirebaseOptions(
-      apiKey: "AIzaSyDyP0Skge1nDdr5Rm8Gy8jbDPxa7mVcYIw",
-        appId: "1:1091266292001:web:da74acf998ff4bf9663660",
-        messagingSenderId: "1091266292001",
-        projectId: "flutterapplication-589b4",
+      //api keys
     ),
   );
 
