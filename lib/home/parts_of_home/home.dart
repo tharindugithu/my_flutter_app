@@ -5,7 +5,6 @@ import 'package:my_flutter_app/constants/const.dart';
 import 'package:my_flutter_app/screens/category.dart';
 import 'package:my_flutter_app/service/ApiService.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/screens/categories.dart';
 import 'package:my_flutter_app/model/CategoryModel.dart';
@@ -289,27 +288,7 @@ class _HomeUiState extends State<HomeUi> {
                                           theChild: Container(
                                             width: 200,
                                             margin: EdgeInsets.all(5),
-                                            // decoration: BoxDecoration(
-                                            //   color: Colors.transparent,
-                                            //   borderRadius:
-                                            //       BorderRadius.circular(30),
-                                            //   boxShadow: [
-                                            //     BoxShadow(
-                                            //       color: Colors.black12,
-                                            //       offset:
-                                            //           const Offset(5.0, 5.0),
-                                            //       blurRadius: 10.0,
-                                            //       spreadRadius: 2.0,
-                                            //     ),
-                                            //     BoxShadow(
-                                            //       color: Colors.white,
-                                            //       offset:
-                                            //           const Offset(0.0, 0.0),
-                                            //       blurRadius: 0.0,
-                                            //       spreadRadius: 0.0,
-                                            //     ),
-                                            //   ],
-                                            // ),
+                                           
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
@@ -375,15 +354,14 @@ class _HomeUiState extends State<HomeUi> {
                       children: [
                         Container(
                           child: Align(
-                            // alignment: Alignment(-1.0, 0.0),
+                            
                             child: Text(
                               "On going courses",
                               style: GoogleFonts.montserrat(
                                 fontSize: 15, // Increase text size
                                 color: const Color.fromARGB(
                                     221, 255, 255, 255), // Change text color
-                                // Increase font weight
-                                // Change font family (replace 'YourFontFamily' with the desired font family)
+                               
                               ),
                             ),
                           ),
@@ -414,31 +392,14 @@ class _HomeUiState extends State<HomeUi> {
                         margin: EdgeInsets.only(top: 5),
                         decoration: BoxDecoration(
 
-                            // boxShadow: [
-                            //   BoxShadow(
-                            //     color: Colors.black26,
-                            //     offset: const Offset(
-                            //       5.0,
-                            //       5.0,
-                            //     ),
-                            //     blurRadius: 10.0,
-                            //     spreadRadius: 2.0,
-                            //   ), //BoxShadow
-                            //   BoxShadow(
-                            //     color: Colors.white,
-                            //     offset: const Offset(0.0, 0.0),
-                            //     blurRadius: 0.0,
-                            //     spreadRadius: 0.0,
-                            //   ), //BoxShadow
-                            // ],
+                          
                             ),
-                        //margin:
-                        //EdgeInsets.only(left: w * 0.025, right: w * 0.025),
+                       
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: 10, // Number of cards
                           itemBuilder: (BuildContext context, int index) {
-                            // Replace 'assets/your_image.png' with the actual image asset path
+                           
                             String imagePath =
                                 imagePaths[index % imagePaths.length];
                             int colorCode = 0;
@@ -450,7 +411,7 @@ class _HomeUiState extends State<HomeUi> {
                             return TextButton(
                                 onPressed: () {},
                                 child: Container(
-                                  //width: 270, // Adjust the width of the card
+                                 
                                   margin: EdgeInsets.all(5),
                                   decoration:
                                       BoxDecoration(color: Colors.transparent),
@@ -506,8 +467,7 @@ class _HomeUiState extends State<HomeUi> {
                                                       .grey, // Set the color of the inactive track
                                                   label: "Select Age",
                                                   onChanged: (double newValue) {
-                                                    // Handle the new value here
-                                                    // You can update a variable or perform any action you need
+                                                   
                                                   },
                                                   min: 5,
                                                   max: 10,
@@ -596,7 +556,7 @@ class _HomeUiState extends State<HomeUi> {
                       children: [
                         Container(
                           child: Align(
-                            // alignment: Alignment(-1.0, 0.0),
+                           
                             child: Text(
                               "Recomandation",
                               style: GoogleFonts.montserrat(
@@ -629,30 +589,15 @@ class _HomeUiState extends State<HomeUi> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
-                            // BoxShadow(
-                            //   color: Colors.black26,
-                            //   offset: const Offset(
-                            //     5.0,
-                            //     5.0,
-                            //   ),
-                            //   blurRadius: 10.0,
-                            //   spreadRadius: 2.0,
-                            // ), //BoxShadow
-                            // BoxShadow(
-                            //   color: Colors.white,
-                            //   offset: const Offset(0.0, 0.0),
-                            //   blurRadius: 0.0,
-                            //   spreadRadius: 0.0,
-                            // ), //BoxShadow
+                           
                           ],
                         ),
-                        //margin:
-                        //EdgeInsets.only(left: w * 0.025, right: w * 0.025),
+                        
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: 10, // Number of cards
                           itemBuilder: (BuildContext context, int index) {
-                            // Replace 'assets/your_image.png' with the actual image asset path
+                            
                             String imagePath =
                                 imagePaths[index % imagePaths.length];
                             ;

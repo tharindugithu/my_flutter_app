@@ -34,7 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text("Sign Up"),
+        backgroundColor: Colors.blue,
       ),
       body: Center(
         child: Padding(
@@ -43,8 +43,8 @@ class _SignUpPageState extends State<SignUpPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Sign Up",
-                style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+                "Create an Account",
+                style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Colors.blue),
               ),
               SizedBox(
                 height: 30,
@@ -86,12 +86,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   child: Center(
                     child: isSigningUp
-                        ? CircularProgressIndicator(color: Colors.white,)
+                        ? CircularProgressIndicator(color: Colors.white)
                         : Text(
                             "Sign Up",
                             style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                                color: Colors.white, fontWeight: FontWeight.bold),
                           ),
                   ),
                 ),
@@ -107,18 +106,19 @@ class _SignUpPageState extends State<SignUpPage> {
                     width: 5,
                   ),
                   GestureDetector(
-                      onTap: () {
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginPage()),
-                            (route) => false);
-                      },
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
-                      ))
+                    onTap: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        (route) => false,
+                      );
+                    },
+                    child: Text(
+                      "Login",
+                      style: TextStyle(
+                          color: Colors.blue, fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ],
               )
             ],
@@ -144,8 +144,8 @@ class _SignUpPageState extends State<SignUpPage> {
     });
 
     if (user != null) {
-      showToast(message: "User is successfully created");
-      Navigator.pushReplacementNamed(context, "/home");
+      showToast(message: "User successfully created");
+      Navigator.pushNamed(context, "/quiz"); // Replace "/quiz" with the correct route
     } else {
       showToast(message: "Some error happened");
     }

@@ -1,4 +1,6 @@
+import 'dart:async';  
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/auth/login_page.dart'; 
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({Key? key}) : super(key: key);
@@ -8,6 +10,25 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage> {
+  late Timer _timer;  
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer(Duration(seconds: 2), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),  
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -23,13 +44,13 @@ class _LoadingPageState extends State<LoadingPage> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFF19779B), // Start color
-              Color(0xFF17B3A6), // End color
+              Color(0xFF19779B), 
+              Color(0xFF17B3A6), 
             ],
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.all(40.0), // Adjust the padding value as needed
+          padding: EdgeInsets.all(40.0), 
           child: DecoratedBox(
             decoration: BoxDecoration(
               image: DecorationImage(

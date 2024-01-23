@@ -16,8 +16,9 @@ class _HomeScreenState extends State<HomeScreen> {
     HomeUi(),
     SearchUi(),
     const Text("Text 03"),
-    const Text("Text 04")
+    const Text("Text 04"),
   ];
+
   void onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
@@ -28,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: h * 0.14,
@@ -38,16 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 32.0,
           child: IconButton(
             icon: Icon(
-              Icons.arrow_circle_left_outlined,
+              Icons.menu,
               size: 30,
             ),
-            // Image.asset(
-            //   "assets/img/larrow.png",
-            //   width: 18.0,
-            //   height: 18.0,
-            // ),
             onPressed: () {
-              Navigator.pop(context);
+              Scaffold.of(context).openDrawer();
             },
           ),
         ),
@@ -74,9 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
           currentIndex: selectedIndex,
           onTap: onItemTapped,
           elevation: 30,
-          showSelectedLabels: true, // Set to true to show selected item label
-          showUnselectedLabels:
-              true, // Set to true to show unselected item labels
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Colors.blueGrey,
           unselectedItemColor: Color(0xFF526480),
@@ -88,15 +84,76 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavigationBarItem(
                 icon: Icon(FluentSystemIcons.ic_fluent_search_regular),
                 activeIcon: Icon(FluentSystemIcons.ic_fluent_search_filled),
-                label: "Search"), // Update label here
+                label: "Search"),
             BottomNavigationBarItem(
                 icon: Icon(FluentSystemIcons.ic_fluent_ticket_regular),
                 activeIcon: Icon(FluentSystemIcons.ic_fluent_ticket_filled),
-                label: "Tickets"), // Update label here
+                label: "Tickets"),
             BottomNavigationBarItem(
                 icon: Icon(FluentSystemIcons.ic_fluent_person_regular),
                 activeIcon: Icon(FluentSystemIcons.ic_fluent_person_filled),
-                label: "Profile"), // Update label here
+                label: "Profile"),
+          ],
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Your App Name',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              title: Text('Home'),
+              onTap: () {
+                Navigator.pop(context);
+                setState(() {
+                  selectedIndex = 0;
+                });
+              },
+            ),
+            ListTile(
+              title: Text('Search'),
+              onTap: () {
+                Navigator.pop(context);
+                setState(() {
+                  selectedIndex = 1;
+                });
+              },
+            ),
+            ListTile(
+              title: Text('Tickets'),
+              onTap: () {
+                Navigator.pop(context);
+                setState(() {
+                  selectedIndex = 2;
+                });
+              },
+            ),
+            ListTile(
+              title: Text('Profile'),
+              onTap: () {
+                Navigator.pop(context);
+                setState(() {
+                  selectedIndex = 3;
+                });
+              },
+            ),
           ],
         ),
       ),

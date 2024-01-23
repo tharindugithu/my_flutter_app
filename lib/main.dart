@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:my_flutter_app/auth/login_page.dart';
 import 'package:my_flutter_app/auth/signup_page.dart';
+import 'package:my_flutter_app/auth/ask_quiz.dart';
 import 'package:my_flutter_app/home/home_screen.dart';
 import 'package:my_flutter_app/loading/initial_loading.dart';
 
@@ -20,35 +21,18 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  bool _isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    // Perform any loading or initialization here
-    // For example, you can use Future.delayed to simulate loading
-    Future.delayed(Duration(seconds: 2), () {
-      setState(() {
-        _isLoading = false;
-      });
-    });
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Firebase',
-      home: _isLoading ? LoadingPage() : LoginPage(), 
+      initialRoute: '/',
       routes: {
+        '/': (context) => LoadingPage(),
         '/login': (context) => LoginPage(),
         '/signUp': (context) => SignUpPage(),
+        '/quiz': (context) => QuizPage(),
         '/home': (context) => HomeScreen(),
       },
     );
