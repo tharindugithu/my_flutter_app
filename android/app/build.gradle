@@ -25,41 +25,27 @@ def kotlin_version = '1.5.30' // Updated Kotlin version
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions' // Add this line for Kotlin Android Extensions
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 30 // Updated compileSdkVersion
+    compileSdkVersion 33
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
 
     defaultConfig {
         applicationId "com.example.my_flutter_app"
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        multiDexEnabled true // Add this line for multidex support
     }
 
     buildTypes {
         release {
             signingConfig signingConfigs.debug
         }
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
-    // Add this block for multidex support
-    buildFeatures {
-        dataBinding true
-        viewBinding true
-    }
-
-    // Add this block for multidex support
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -69,5 +55,4 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:multidex:1.0.3' // Add this line for multidex support
 }

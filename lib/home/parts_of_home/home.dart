@@ -54,7 +54,7 @@ class _HomeUiState extends State<HomeUi> {
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
-    List<String> imagePaths = Consts().imagePaths;
+    List<String> imagePaths = Consts().imagePathsForCategories;
 
     return Scaffold(
       body: ListView(
@@ -73,17 +73,17 @@ class _HomeUiState extends State<HomeUi> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.menu,
-                          size: 30,
-                        ),
-                        onPressed: () {},
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                      ),
-                    ),
+                    // Container(
+                    //   child: IconButton(
+                    //     icon: Icon(
+                    //       Icons.menu,
+                    //       size: 30,
+                    //     ),
+                    //     onPressed: () {},
+                    //     splashColor: Colors.transparent,
+                    //     highlightColor: Colors.transparent,
+                    //   ),
+                    // ),
                     Column(
                       children: [
                         Row(
@@ -283,12 +283,11 @@ class _HomeUiState extends State<HomeUi> {
                                         child: FrostedGlassBox(
                                           radius: 30.0,
                                           theHeight: 200.0,
-                                          theWidth: 200.0,
+                                          theWidth: 220.0,
                                           padding: 1.0,
                                           theChild: Container(
                                             width: 200,
                                             margin: EdgeInsets.all(5),
-                                           
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
@@ -318,16 +317,23 @@ class _HomeUiState extends State<HomeUi> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.center,
                                                   children: [
-                                                    Text(
-                                                      catN,
-                                                      style: GoogleFonts
-                                                          .montserrat(
-                                                        fontSize: 12.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: const Color
-                                                            .fromARGB(
-                                                            255, 25, 25, 25),
+                                                    Container(
+                                                      width: 200,
+                                                      child: Text(
+                                                        catN,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: GoogleFonts
+                                                            .montserrat(
+                                                          fontSize: 15.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              255,
+                                                              254,
+                                                              254),
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -354,14 +360,12 @@ class _HomeUiState extends State<HomeUi> {
                       children: [
                         Container(
                           child: Align(
-                            
                             child: Text(
                               "On going courses",
                               style: GoogleFonts.montserrat(
                                 fontSize: 15, // Increase text size
                                 color: const Color.fromARGB(
                                     221, 255, 255, 255), // Change text color
-                               
                               ),
                             ),
                           ),
@@ -390,16 +394,11 @@ class _HomeUiState extends State<HomeUi> {
                         padding: EdgeInsets.all(0),
                         width: w * 0.95,
                         margin: EdgeInsets.only(top: 5),
-                        decoration: BoxDecoration(
-
-                          
-                            ),
-                       
+                        decoration: BoxDecoration(),
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: 10, // Number of cards
                           itemBuilder: (BuildContext context, int index) {
-                           
                             String imagePath =
                                 imagePaths[index % imagePaths.length];
                             int colorCode = 0;
@@ -411,7 +410,6 @@ class _HomeUiState extends State<HomeUi> {
                             return TextButton(
                                 onPressed: () {},
                                 child: Container(
-                                 
                                   margin: EdgeInsets.all(5),
                                   decoration:
                                       BoxDecoration(color: Colors.transparent),
@@ -466,9 +464,8 @@ class _HomeUiState extends State<HomeUi> {
                                                   inactiveColor: Colors
                                                       .grey, // Set the color of the inactive track
                                                   label: "Select Age",
-                                                  onChanged: (double newValue) {
-                                                   
-                                                  },
+                                                  onChanged:
+                                                      (double newValue) {},
                                                   min: 5,
                                                   max: 10,
                                                   value: 9,
@@ -556,7 +553,6 @@ class _HomeUiState extends State<HomeUi> {
                       children: [
                         Container(
                           child: Align(
-                           
                             child: Text(
                               "Recomandation",
                               style: GoogleFonts.montserrat(
@@ -588,16 +584,12 @@ class _HomeUiState extends State<HomeUi> {
                         margin: EdgeInsets.only(top: 5, bottom: 10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                           
-                          ],
+                          boxShadow: [],
                         ),
-                        
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: 10, // Number of cards
                           itemBuilder: (BuildContext context, int index) {
-                            
                             String imagePath =
                                 imagePaths[index % imagePaths.length];
                             ;

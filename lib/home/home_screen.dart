@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/home/parts_of_home/home.dart';
 import 'package:my_flutter_app/home/parts_of_home/search_dart.dart';
+import 'package:my_flutter_app/navbar/Navbar.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -16,9 +17,8 @@ class _HomeScreenState extends State<HomeScreen> {
     HomeUi(),
     SearchUi(),
     const Text("Text 03"),
-    const Text("Text 04"),
+    const Text("Text 04")
   ];
-
   void onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
@@ -29,9 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
-
     return Scaffold(
+      endDrawer: Navbar(),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         toolbarHeight: h * 0.14,
         backgroundColor: Color.fromARGB(255, 0, 0, 0),
         leading: Container(
@@ -40,11 +41,17 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 32.0,
           child: IconButton(
             icon: Icon(
-              Icons.menu,
+              Icons.arrow_circle_left_outlined,
               size: 30,
+              color: Colors.white,
             ),
+            // Image.asset(
+            //   "assets/img/larrow.png",
+            //   width: 18.0,
+            //   height: 18.0,
+            // ),
             onPressed: () {
-              Scaffold.of(context).openDrawer();
+              Navigator.pop(context);
             },
           ),
         ),
@@ -71,8 +78,9 @@ class _HomeScreenState extends State<HomeScreen> {
           currentIndex: selectedIndex,
           onTap: onItemTapped,
           elevation: 30,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
+          showSelectedLabels: true, // Set to true to show selected item label
+          showUnselectedLabels:
+              true, // Set to true to show unselected item labels
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Colors.blueGrey,
           unselectedItemColor: Color(0xFF526480),
@@ -84,76 +92,15 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavigationBarItem(
                 icon: Icon(FluentSystemIcons.ic_fluent_search_regular),
                 activeIcon: Icon(FluentSystemIcons.ic_fluent_search_filled),
-                label: "Search"),
+                label: "Search"), // Update label here
             BottomNavigationBarItem(
                 icon: Icon(FluentSystemIcons.ic_fluent_ticket_regular),
                 activeIcon: Icon(FluentSystemIcons.ic_fluent_ticket_filled),
-                label: "Tickets"),
+                label: "Tickets"), // Update label here
             BottomNavigationBarItem(
                 icon: Icon(FluentSystemIcons.ic_fluent_person_regular),
                 activeIcon: Icon(FluentSystemIcons.ic_fluent_person_filled),
-                label: "Profile"),
-          ],
-        ),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'Your App Name',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            ListTile(
-              title: Text('Home'),
-              onTap: () {
-                Navigator.pop(context);
-                setState(() {
-                  selectedIndex = 0;
-                });
-              },
-            ),
-            ListTile(
-              title: Text('Search'),
-              onTap: () {
-                Navigator.pop(context);
-                setState(() {
-                  selectedIndex = 1;
-                });
-              },
-            ),
-            ListTile(
-              title: Text('Tickets'),
-              onTap: () {
-                Navigator.pop(context);
-                setState(() {
-                  selectedIndex = 2;
-                });
-              },
-            ),
-            ListTile(
-              title: Text('Profile'),
-              onTap: () {
-                Navigator.pop(context);
-                setState(() {
-                  selectedIndex = 3;
-                });
-              },
-            ),
+                label: "Profile"), // Update label here
           ],
         ),
       ),

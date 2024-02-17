@@ -1,5 +1,5 @@
 class Consts {
-  List<String> imagePaths = [
+  List<String> imagePathsForCourses = [
     'assets/img/HEROKU.png',
     'assets/img/html.png',
     'assets/img/javascript.png',
@@ -10,6 +10,15 @@ class Consts {
     'assets/img/PHP.png',
     'assets/img/react.png',
     'assets/img/css.png',
-    // Add more image paths as needed
+   
+  ];
+   List<String> imagePathsForCategories = [
+    'assets/img/pl.png',
+    'assets/img/acc.png',
+    'assets/img/math.png',
+    
+   
   ];
 }
+
+//value 0 ,

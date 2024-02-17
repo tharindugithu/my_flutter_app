@@ -16,7 +16,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _isSigning = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn(clientId: 'add id');
+  final GoogleSignIn _googleSignIn = GoogleSignIn(clientId: '1091266292001-r76rbncgnn1ek77rr4lqosovb621kvq6.apps.googleusercontent.com');
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
@@ -143,8 +143,9 @@ Widget build(BuildContext context) {
                         _signInWithGoogle();
                       },
                       child: Container(
+                       // margin: EdgeInsets.only(bottom: 10),
                         width: double.infinity,
-                        height: 45,
+                        height: 15,
                         decoration: BoxDecoration(
                           color: Colors.red,
                           borderRadius: BorderRadius.circular(10),
@@ -173,28 +174,31 @@ Widget build(BuildContext context) {
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("Don't have an account?"),
                         SizedBox(
-                          width: 5,
+                          width: 15,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(builder: (context) => SignUpPage()),
-                              (route) => false,
-                            );
-                          },
-                          child: Text(
-                            "Sign Up",
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
+                        Container(
+                          child: GestureDetector(
+                            onTap: () {
+                              print("clicked");
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(builder: (context) => SignUpPage()),
+                                (route) => false,
+                              );
+                            },
+                            child: Text(
+                              "Sign Up",
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),

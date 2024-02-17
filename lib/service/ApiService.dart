@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:my_flutter_app/model/CategoryModel.dart';
+import 'package:my_flutter_app/model/Course.dart';
 
 class ApiService {
   final Dio dio = Dio();
@@ -31,6 +32,23 @@ class ApiService {
 
       var resData = res.data as Map<String, dynamic>;
       return CategoryModel.fromJson(resData);
+    } on DioError catch (e) {
+      print("DioError: $e");
+
+      rethrow;
+    } catch (e) {
+      print("Error: $e");
+
+      rethrow;
+    }
+  }
+
+  Future<CourseModel> fetchCourseById(String courseId) async {
+    try {
+      var res = await dio.get("$baseUrl/course/get_course/$courseId");
+
+      var resData = res.data as Map<String, dynamic>;
+      return CourseModel.fromJson(resData);
     } on DioError catch (e) {
       print("DioError: $e");
 

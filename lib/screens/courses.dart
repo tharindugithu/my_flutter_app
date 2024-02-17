@@ -52,6 +52,7 @@ class _CoursesPageState extends State<CoursesPage> {
             icon: Icon(
               Icons.arrow_circle_left_outlined,
               size: 30,
+               color: Colors.white,
             ),
             // Image.asset(
             //   "assets/img/larrow.png",
