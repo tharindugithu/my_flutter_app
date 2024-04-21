@@ -7,10 +7,13 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_app/constants/const.dart';
 import 'package:my_flutter_app/model/Course.dart';
+import 'package:my_flutter_app/model/Tutorial.dart';
+import 'package:my_flutter_app/screens/tutorial.dart';
 
 import 'package:my_flutter_app/service/ApiService.dart';
 import 'package:blur/blur.dart';
 import 'package:my_flutter_app/utils/Blurbox.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class SelectedCourse extends StatefulWidget {
   final String selectedCourse;
@@ -21,16 +24,19 @@ class SelectedCourse extends StatefulWidget {
 
 class _SelectedCategoryState extends State<SelectedCourse> {
   String url = dotenv.get("BASE_URL");
+  List<TutorialModel> tutorials = [];
   List<String> imagePathForCategories = Consts().imagePathsForCategories;
   List<String> imagePathsForCourses = Consts().imagePathsForCourses;
   late CourseModel courseModel;
   bool isLoading = true;
+  bool isLoading2 = true;
   String errorMessage = "";
   String get selectedCourse => widget.selectedCourse;
   @override
   void initState() {
     super.initState();
     fetchData();
+    fetchTutorials();
     print(url);
   }
 
@@ -68,6 +74,27 @@ class _SelectedCategoryState extends State<SelectedCourse> {
     }
   }
 
+  void fetchTutorials() async {
+    try {
+      tutorials = await ApiService(url)
+          .fetchData("tutorial", (e) => TutorialModel.fromJson(e));
+      print(tutorials[0].title);
+      if (mounted) {
+        setState(() {
+          isLoading2 = false;
+        });
+      }
+    } catch (e) {
+      print("Error: $e");
+      if (mounted) {
+        setState(() {
+          isLoading2 = false;
+        });
+      }
+      errorMessage = "Failed to fetch data. Please try again later.";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -84,7 +111,7 @@ class _SelectedCategoryState extends State<SelectedCourse> {
               icon: Icon(
                 Icons.arrow_circle_left_outlined,
                 size: 30,
-                 color: Colors.white,
+                color: Colors.white,
               ),
               // Image.asset(
               //   "assets/img/larrow.png",
@@ -126,7 +153,7 @@ class _SelectedCategoryState extends State<SelectedCourse> {
                     children: [
                       Container(
                         width: w,
-                        height: h * 0.9,
+                        height: h * 1.1,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
                             // Import image in pubspec.yaml first
@@ -143,15 +170,15 @@ class _SelectedCategoryState extends State<SelectedCourse> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                width: w*0.95,
+                                width: w * 0.95,
                                 child: Text(
                                   courseModel.title,
-                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.robotoSlab(                          
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.robotoSlab(
                                     fontSize: 25,
                                     fontWeight: FontWeight.w500,
-                                    color:
-                                        const Color.fromARGB(221, 255, 253, 253),
+                                    color: const Color.fromARGB(
+                                        221, 255, 253, 253),
                                   ),
                                 ),
                               ),
@@ -203,8 +230,142 @@ class _SelectedCategoryState extends State<SelectedCourse> {
                               )
                             ],
                           ),
-                          Row(
-                            
+                          Column(
+                            children: [
+                              Container(
+                                  margin: EdgeInsets.only(top: 70),
+                                  child: Text(
+                                    "Tutorials",
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color.fromARGB(221, 255, 255, 255),
+                                    ),
+                                  )),
+                              Container(
+                                height: h * 0.3,
+                                padding: EdgeInsets.all(10),
+                                width: w * 0.95,
+                                margin: EdgeInsets.only(top: 0),
+                                child: isLoading2
+                                    ? Center(
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : errorMessage.isNotEmpty
+                                        ? Center(
+                                            child: Text(
+                                              errorMessage,
+                                              style:
+                                                  TextStyle(color: Colors.red),
+                                            ),
+                                          )
+                                        : ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: tutorials.length,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              String tutorialTitle =
+                                                  tutorials[index].title;
+
+                                              return Container(
+                                                margin: EdgeInsets.only(
+                                                    left: 5,
+                                                    top: 5,
+                                                    bottom: 5,
+                                                    right: 5),
+                                                child: TextButton(
+                                                  style: ButtonStyle(
+                                                    foregroundColor:
+                                                        MaterialStateProperty
+                                                            .all(Colors.white),
+                                                    padding:
+                                                        MaterialStateProperty
+                                                            .all(EdgeInsets.all(
+                                                                1.0)),
+                                                    elevation:
+                                                        MaterialStateProperty
+                                                            .all(4.0),
+                                                    shape: MaterialStateProperty
+                                                        .all(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(30.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            SelectedTutorial(
+                                                             tutorialModel: tutorials[index],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: FrostedGlassBox(
+                                                    radius: 10.0,
+                                                    theHeight: 170.0,
+                                                    theWidth: 240.0,
+                                                    padding: 1.0,
+                                                    theChild: Container(
+                                                      width: 200,
+                                                      margin: EdgeInsets.all(5),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          SizedBox(height: 8),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Container(
+                                                                width: 200,
+                                                                child: Text(
+                                                                  tutorialTitle,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: GoogleFonts
+                                                                      .montserrat(
+                                                                    fontSize:
+                                                                        20.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                // ),
+                              ),
+                            ],
                           )
                         ]),
                       )
