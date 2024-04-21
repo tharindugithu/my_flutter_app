@@ -9,6 +9,7 @@ import 'package:my_flutter_app/constants/const.dart';
 import 'package:my_flutter_app/model/ActivityModel.dart';
 import 'package:my_flutter_app/model/Course.dart';
 import 'package:my_flutter_app/model/Tutorial.dart';
+import 'package:my_flutter_app/screens/activity.dart';
 
 import 'package:my_flutter_app/service/ApiService.dart';
 import 'package:blur/blur.dart';
@@ -222,20 +223,23 @@ class _SelectedTutorialState extends State<SelectedTutorial> {
                                     ),
                                   ],
                                 ),
-                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: w * 0.95,
-                                      margin: EdgeInsets.only(top: 10),
-                                      height: h * 0.4,
-                                      color: Colors.transparent,
-                                      child: Image(
-                                        image: AssetImage("assets/img/books.gif"),
-                                      ),
-                                    )
-                                  ],
+                                //  Row(
+                                //   mainAxisAlignment: MainAxisAlignment.center,
+                                //   crossAxisAlignment: CrossAxisAlignment.center,
+                                //   children: [
+                                //     Container(
+                                //       width: w * 0.95,
+                                //       margin: EdgeInsets.only(top: 10),
+                                //       height: h * 0.4,
+                                //       color: Colors.transparent,
+                                //       child: Image(
+                                //         image: AssetImage("assets/img/books.gif"),
+                                //       ),
+                                //     )
+                                //   ],
+                                // ),
+                                SizedBox(
+                                  height: h*0.33,
                                 ),
                                 Row(
                                   children: [
@@ -243,7 +247,11 @@ class _SelectedTutorialState extends State<SelectedTutorial> {
                                       width: w * 0.95,
                                       child: ElevatedButton.icon(
                                         onPressed: () {
-                                          // Handle button click
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Activity()));
                                         },
                                         icon: Icon(
                                           Icons
