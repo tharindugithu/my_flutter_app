@@ -2,6 +2,7 @@ import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/home/parts_of_home/home.dart';
+import 'package:my_flutter_app/home/parts_of_home/profile_ui.dart';
 import 'package:my_flutter_app/home/parts_of_home/search_dart.dart';
 import 'package:my_flutter_app/navbar/Navbar.dart';
 
@@ -16,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static final List<Widget> widgetOptions = <Widget>[
     HomeUi(),
     SearchUi(),
-    const Text("Text 03"),
+    ProfileUi(),
     const Text("Text 04")
   ];
   void onItemTapped(int index) {
