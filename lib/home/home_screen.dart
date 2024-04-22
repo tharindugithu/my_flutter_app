@@ -1,10 +1,10 @@
-import 'package:fluentui_icons/fluentui_icons.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:my_flutter_app/home/parts_of_home/home.dart';
 import 'package:my_flutter_app/home/parts_of_home/profile_ui.dart';
 import 'package:my_flutter_app/home/parts_of_home/search_dart.dart';
 import 'package:my_flutter_app/navbar/Navbar.dart';
+import 'package:my_flutter_app/home/parts_of_home/settings.dart'; // Import the SettingsUi
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -14,12 +14,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
-  static final List<Widget> widgetOptions = <Widget>[
+  static List<Widget> widgetOptions = <Widget>[
     HomeUi(),
     SearchUi(),
     ProfileUi(),
-    const Text("Text 04")
+    SettingsUi(themeModeNotifier: ValueNotifier(ThemeMode.light)), // Add SettingsUi here
   ];
+
   void onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
@@ -46,11 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
               size: 30,
               color: Colors.white,
             ),
-            // Image.asset(
-            //   "assets/img/larrow.png",
-            //   width: 18.0,
-            //   height: 18.0,
-            // ),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -79,9 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
           currentIndex: selectedIndex,
           onTap: onItemTapped,
           elevation: 30,
-          showSelectedLabels: true, // Set to true to show selected item label
-          showUnselectedLabels:
-              true, // Set to true to show unselected item labels
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Colors.blueGrey,
           unselectedItemColor: Color(0xFF526480),
@@ -93,15 +88,15 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavigationBarItem(
                 icon: Icon(FluentSystemIcons.ic_fluent_search_regular),
                 activeIcon: Icon(FluentSystemIcons.ic_fluent_search_filled),
-                label: "Search"), // Update label here
-            BottomNavigationBarItem(
-                icon: Icon(FluentSystemIcons.ic_fluent_ticket_regular),
-                activeIcon: Icon(FluentSystemIcons.ic_fluent_ticket_filled),
-                label: "Tickets"), // Update label here
+                label: "Search"),
             BottomNavigationBarItem(
                 icon: Icon(FluentSystemIcons.ic_fluent_person_regular),
                 activeIcon: Icon(FluentSystemIcons.ic_fluent_person_filled),
-                label: "Profile"), // Update label here
+                label: "Profile"),
+            BottomNavigationBarItem(
+                icon: Icon(FluentSystemIcons.ic_fluent_settings_regular),
+                activeIcon: Icon(FluentSystemIcons.ic_fluent_settings_filled),
+                label: "Settings"),
           ],
         ),
       ),
