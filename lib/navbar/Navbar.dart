@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_flutter_app/home/home_screen.dart';
 import 'package:my_flutter_app/home/parts_of_home/profile_ui.dart';
 import 'package:my_flutter_app/home/parts_of_home/search_dart.dart';
-import 'package:my_flutter_app/home/parts_of_home/settings.dart'; // Import the SettingsUi
+import 'package:my_flutter_app/home/parts_of_home/settings.dart';
+import 'package:my_flutter_app/home/parts_of_home/tips.dart'; // Import the SettingsUi
 
 class Navbar extends StatefulWidget {
   const Navbar({Key? key}) : super(key: key);
@@ -129,6 +130,18 @@ class _NavbarState extends State<Navbar> with TickerProviderStateMixin {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => SettingsUi(themeModeNotifier: ValueNotifier(ThemeMode.light))),
+                      );
+                    },
+                  ),
+                   _buildNavItem(
+                    index: 3,
+                    icon: Icons.tips_and_updates,
+                    title: 'Tips',
+                    onTap: () {
+                      _onItemClicked(3);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => MotivationalTipsScreen()),
                       );
                     },
                   ),
