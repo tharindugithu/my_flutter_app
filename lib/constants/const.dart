@@ -16,8 +16,6 @@ class Consts {
     'assets/img/pl.png',
     'assets/img/acc.png',
     'assets/img/math.png',
-    
-   
   ];
 }
 

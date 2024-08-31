@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:my_flutter_app/model/CategoryModel.dart';
 import 'package:my_flutter_app/model/Course.dart';
+import 'package:my_flutter_app/model/Tutorial.dart';
 
 class ApiService {
   final Dio dio = Dio();
@@ -59,4 +60,23 @@ class ApiService {
       rethrow;
     }
   }
+
+  Future<TutorialModel> fetchTutorialById(String tutorialId) async {
+    try {
+      var res = await dio.get("$baseUrl/tutorial/get_tutorial/$tutorialId");
+
+      var resData = res.data as Map<String, dynamic>;
+      return TutorialModel.fromJson(resData);
+    } on DioError catch (e) {
+      print("DioError: $e");
+
+      rethrow;
+    } catch (e) {
+      print("Error: $e");
+
+      rethrow;
+    }
+  }
+   
+   
 }
